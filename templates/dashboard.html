@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+
+    <!-- Donor Profile Card -->
+    <div class="col-md-4 mb-4">
+        <div class="card shadow text-center p-4">
+            <h1>🩸</h1>
+            <h4 class="text-danger fw-bold">{{ donor.user.get_full_name }}</h4>
+            <p class="text-muted">{{ donor.user.email }}</p>
+            <hr>
+            <div class="row">
+                <div class="col-6">
+                    <h5 class="text-danger">{{ donor.blood_group }}</h5>
+                    <small class="text-muted">Blood Group</small>
+                </div>
+                <div class="col-6">
+                    <h5 class="text-danger">{{ donor.district }}</h5>
+                    <small class="text-muted">District</small>
+                </div>
+            </div>
+            <hr>
+            <div class="mt-2">
+                <h5>📞 {{ donor.phone }}</h5>
+                <small class="text-muted">Phone Number</small>
+            </div>
+            <hr>
+            <!-- Availability Toggle -->
+            <form method="POST" action="/toggle/">
+                {% csrf_token %}
+                {% if donor.is_available %}
+                    <button type="submit" class="btn btn-success w-100">
+                        ✅ Available to Donate
+                    </button>
+                {% else %}
+                    <button type="submit" class="btn btn-secondary w-100">
+                        ❌ Not Available
+                    </button>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+    <!-- Right Side -->
+    <div class="col-md-8">
+
+        <!-- Welcome Card -->
+        <div class="card shadow mb-4 p-4" 
+        style="background: linear-gradient(135deg, #c0392b, #e74c3c);">
+            <h3 class="text-white fw-bold">
+                Welcome, {{ donor.user.first_name }}! 👋
+            </h3>
+            <p class="text-white opacity-75">
+                Thank you for being a blood donor. 
+                You can save up to 3 lives with one donation!
+            </p>
+            <a href="/search/" class="btn btn-light text-danger fw-bold">
+                🔍 Find Blood Now
+            </a>
+        </div>
+
+        <!-- Stats Card -->
+        <div class="card shadow p-4">
+            <h5 class="text-danger mb-3">📊 Your Info</h5>
+            <table class="table">
+                <tr>
+                    <td><strong>Name</strong></td>
+                    <td>{{ donor.user.get_full_name }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Blood Group</strong></td>
+                    <td>{{ donor.blood_group }}</td>
+                </tr>
+                <tr>
+                    <td><strong>District</strong></td>
+                    <td>{{ donor.district }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Phone</strong></td>
+                    <td>{{ donor.phone }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Status</strong></td>
+                    <td>
+                        {% if donor.is_available %}
+                            <span class="badge bg-success">Available</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Not Available</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<!-- shows all blood requests sent to this donor -->
+<div class="card shadow mt-4 p-4">
+    <h5 class="text-danger mb-3">🩸 Blood Requests</h5>
+    {% if requests %}
+        {% for req in requests %}
+        <div class="card mb-2 p-3 border-danger">
+            <p><strong>Patient:</strong> {{ req.patient_name }}</p>
+            <p><strong>Blood Needed:</strong> {{ req.blood_group_needed }}</p>
+            <p><strong>District:</strong> {{ req.district }}</p>
+            <p><strong>Phone:</strong> {{ req.phone }}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-muted">No requests yet!</p>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<div class="p-5 mb-4 rounded-3 text-white" style="background: linear-gradient(135deg, #c0392b, #e74c3c);">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold">🩸 Blood Donor Finder</h1>
+        <p class="fs-5 mt-3">Find compatible blood donors in your district instantly!</p>
+        <p class="opacity-75">Save lives by connecting patients with donors across Nepal</p>
+        <div class="mt-4">
+            <a href="/search" class="btn btn-light text-danger fw-bold btn-lg me-3">
+                🔍 Find Blood Now
+            </a>
+            <a href="/register" class="btn btn-outline-light btn-lg">
+                💉 Become a Donor
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="row mt-4">
+    <div class="col-md-4 mb-3">
+        <div class="card text-center p-4 shadow-sm h-100">
+            <h1>🩸</h1>
+            <h4 class="text-danger">Smart Matching</h4>
+            <p class="text-muted">Our algorithm finds the most compatible donor based on blood group and location.</p>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card text-center p-4 shadow-sm h-100">
+            <h1>📍</h1>
+            <h4 class="text-danger">Location Based</h4>
+            <p class="text-muted">Find donors in your district for faster response in emergencies.</p>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card text-center p-4 shadow-sm h-100">
+            <h1>⚡</h1>
+            <h4 class="text-danger">Instant Results</h4>
+            <p class="text-muted">Get ranked list of compatible donors instantly with match score.</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
