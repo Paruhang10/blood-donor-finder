@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3 class="text-danger fw-bold mb-4">
+    🩸 Donors for {{ blood_group }} in {{ district }}
+</h3>
+
+{% if results %}
+    <p class="text-muted">Found {{ results|length }} compatible donor(s) — ranked by best match!</p>
+
+    {% for item in results %}
+    <div class="card shadow-sm mb-3">
+        <div class="card-body">
+            <div class="row align-items-center">
+
+                <!-- Donor Info -->
+                <div class="col-md-8">
+                    <h5 class="text-danger fw-bold">
+                        🩸 {{ item.name }}
+                    </h5>
+                    <p class="mb-1">
+                        <strong>Blood Group:</strong> {{ item.blood_group }}
+                    </p>
+                    <p class="mb-1">
+                        <strong>District:</strong> {{ item.district }}
+                    </p>
+                    <p class="mb-1">
+                        <strong>Phone:</strong> {{ item.phone }}
+                    </p>
+
+                     <!--blood request to this donor -->
+                     <a href="/request/{{ item.donor.id }}/" 
+                       class="btn btn-danger btn-sm mt-2">
+                        🩸 Send Blood Request
+                    </a>
+                </div>
+
+                <!-- Match Score -->
+                <div class="col-md-4 text-center">
+                    <h2 class="text-danger fw-bold">{{ item.score }}</h2>
+                    <p class="text-muted mb-2">Match Score / 100</p>
+
+                    {% if item.score >= 80 %}
+                        <span class="badge bg-success fs-6">
+                            ⭐ Best Match
+                        </span>
+                    {% elif item.score >= 50 %}
+                        <span class="badge bg-warning fs-6">
+                            👍 Good Match
+                        </span>
+                    {% else %}
+                        <span class="badge bg-secondary fs-6">
+                            Compatible
+                        </span>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+{% else %}
+    <!-- No donors found -->
+    <div class="text-center mt-5">
+        <h1>😔</h1>
+        <h4 class="text-danger">No Donors Found!</h4>
+        <p class="text-muted">
+            No compatible donors found in {{ district }} for {{ blood_group }}.
+        </p>
+        <a href="/search/" class="btn btn-danger mt-2">
+            🔍 Search Again
+        </a>
+    </div>
+{% endif %}
+
+<div class="mt-3">
+    <a href="/search/" class="btn btn-outline-danger">
+        ← Search Again
+    </a>
+</div>
+
+{% endblock %}
+
